@@ -37,4 +37,3 @@ def drop_tables():
     db.drop_all()
     print("Tables dropped")
 
-    
