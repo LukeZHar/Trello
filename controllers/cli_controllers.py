@@ -1,6 +1,9 @@
+from datetime import date
+
 from flask import Blueprint
 from init import db, bcrypt
 from models.user import User
+from models.card import Card
 
 db_commands = Blueprint('db', __name__)
 
@@ -25,8 +28,37 @@ def seed_tables():
             password = bcrypt.generate_password_hash("123456").decode("utf-8"),
         )
     ]
-    # Add them to the database
+
     db.session.add_all(users)
+
+    cards = [
+        Card(
+            title = "Github Operations",
+            description = "Perform mandatory github ops on the project",
+            status = "To Do",
+            priority = "High",
+            date = date.today(),
+            user = users[0]
+        ),
+        Card(
+            title = "Initilise the modules",
+            description = "Perform ini operations on the necessary modules",
+            status = "Ongoing",
+            priority = "High",
+            date = date.today(),
+            user = users[0]
+        ),
+        Card(
+            title = "Add comments to the code",
+            description = "Add meaning comments where necessary",
+            status = "To Do",
+            priority = "low",
+            date = date.today(),
+            user = users[1]
+        )
+    ]
+    # Add them to the database
+    db.session.add_all(cards)
 
     db.session.commit()
 
