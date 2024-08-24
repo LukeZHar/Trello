@@ -13,15 +13,13 @@ class Comment(db.Model):
 
     user = db.relationship("User", back_populates="comments")
     card = db.relationship("Card", back_populates="comments")
-    
-class CommentSchema(ma.Schema):
-    user = fields.Nested("UserSchema", only=("name", "email"))
-    card = fields.Nested("CardSchema", only=("comments"))
 
+class CommentSchema(ma.Schema):
+    user = fields.Nested("UserSchema", only=["name", "email"])
+    card = fields.Nested("CardSchema", exclude=["comments"])
+    
     class Meta:
-        fields = ("id", "message", "date", "user")
+        fields = ("id", "message", "date", "user", "card")
 
 comment_schema = CommentSchema()
 comments_schema = CommentSchema(many=True)
-
-    
