@@ -13,6 +13,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
 
     cards = db.relationship('Card', back_populates='user')
+    
 class UserSchema(ma.Schema):
     class Meta:
         cards = fields.List(fields.Nested('CardSchema', exclude=['user']))
